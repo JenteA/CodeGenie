@@ -30,4 +30,17 @@ router.get('/lessons', function(req, res, next){
     });
 });
 
+/*get lesson ID*/
+router.param('lesson', function(req, req, next, id){
+    var query = Les.findById(id);
+    
+    query.exec(function (err, lesson){
+        if (err) {return next(err); }
+        if (!lesson) {return next (new Error('can\'t find lesson')); }
+        
+        req.lesson = lesson;
+        return next();
+    })
+})
+
 module.exports = router;

@@ -12,7 +12,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
     <li><a href="#NieuweLes">Creëer nieuwe les</a></li>
     <div>
-        <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{$index}}">{{les.lesTitel}}</a></li>
+        <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}">{{les.lesTitel}}</a></li>
     </div>
   </ul>
 </div>

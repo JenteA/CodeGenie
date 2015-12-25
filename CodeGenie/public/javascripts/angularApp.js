@@ -58,7 +58,7 @@ app.config(function ($routeProvider) {
                 }]
             }
         })
-        .when('/NieuweOpdracht', {
+        .when('/lessons/:lesId', {
             templateUrl: 'Templates/NieuweOpdracht.html',
             controller: "OpdrachtCtrl"
     })
@@ -92,11 +92,6 @@ app.controller('MainCtrl', function ($scope) {
 });
 
 app.controller("LesCtrl", ['$scope', 'lessons', function ($scope, lessons) {
-    $scope.add = function () {
-        $scope.inputs.push({
-            value: ''
-        });
-    };
     $scope.lessons = lessons.lessons;
     $scope.addLesson = function () {
         if (!$scope.les || $scope.les == '') {
@@ -106,5 +101,17 @@ app.controller("LesCtrl", ['$scope', 'lessons', function ($scope, lessons) {
             lesTitel: $scope.les
         });
         $scope.les = '';
+    };
+}]);
+
+app.controller('OpdrachtCtrl', ['$scope', '$routeParams', 'lessons', function($scope, $routeParams, lessons){
+    $scope.lesId = $routeParams.lesId;
+    $scope.inputs = [
+        {value: '' }
+    ];
+    $scope.add = function () {
+        $scope.inputs.push({
+            value: ''
+        });
     };
 }]);
