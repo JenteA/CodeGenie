@@ -7,19 +7,27 @@ var Opdracht = mongoose.model('Opdracht');
 var GemaakteOpdracht = mongoose.model('GemaakteOpdracht');
 var User = mongoose.model('User');
 
-
-var MongoClient = require('mongodb').MogoClient;
-var assert = require('assert');
-var ObjectId = require('mongodb').ObjectID;
-var url = 'mongodb://localhost/Admin';
-
-
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-/*Post Assignment*/
+/*Post lessons*/
+router.post('/lessons', function(req, res, next){
+    var lesson = new Les(req.body);
+    lesson.save(function(err, lesson){
+        if(err){ return next(err); }
+        
+        res.json(lesson);
+    });
+});
+/*Retrieve lessons*/
+router.get('/lessons', function(req, res, next){
+    Les.find(function(err, lessons){
+        if(err){return next(err); }
+        
+        res.json(lessons);
+    });
+});
 
 module.exports = router;

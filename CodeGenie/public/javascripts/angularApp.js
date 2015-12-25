@@ -19,12 +19,12 @@ app.config(function ($routeProvider) {
             controller: 'MainCtrl'
         })
 
-    .when('/Home', {
-        templateUrl: 'Templates/Home.html',
-        controller: 'MainCtrl'
-    })
+        .when('/Home', {
+            templateUrl: 'Templates/Home.html',
+            controller: 'MainCtrl'
+        })
 
-    .when('/Contact', {
+        .when('/Contact', {
             templateUrl: 'Templates/Contact.html',
             controller: 'MainCtrl'
         })
@@ -38,7 +38,12 @@ app.config(function ($routeProvider) {
         })
         .when('/Admin', {
             templateUrl: 'Templates/Admin.html',
-            controller: 'MainCtrl'
+            controller: 'LesCtrl',
+            resolve: {
+                lesPromise: ['lessons', function(lessons){
+                    return lessons.getAll();
+                }]
+            }
         })
         .when('/Test', {
             templateUrl: 'Templates/Test.html',
@@ -46,13 +51,38 @@ app.config(function ($routeProvider) {
         })
         .when('/NieuweLes', {
             templateUrl: 'Templates/Nieuweles.html',
-            controller: "LesCtrl"
+            controller: "LesCtrl",
+            resolve: {
+                lesPromise: ['lessons', function(lessons){
+                    return lessons.getAll();
+                }]
+            }
         })
+        .when('/NieuweOpdracht', {
+            templateUrl: 'Templates/NieuweOpdracht.html',
+            controller: "OpdrachtCtrl"
+    })
     $routeProvider.otherwise({
         redirectTo: '/Welkom'
     });
 });
 
+app.factory('lessons', ['$http', function ($http) {
+    var o = {
+        lessons: []
+    };
+    o.getAll = function () {
+        return $http.get('/lessons').success(function (data) {
+            angular.copy(data, o.lessons);
+        });
+    };
+    o.create = function (lesson) {
+        return $http.post('/lessons', lesson).success(function (data) {
+            o.lessons.push(data);
+        });
+    };
+    return o;
+}]);
 
 // create the controller and inject Angular's $scope
 app.controller('MainCtrl', function ($scope) {
@@ -61,13 +91,20 @@ app.controller('MainCtrl', function ($scope) {
     $scope.message = 'Hello View!';
 });
 
-app.controller("LesCtrl", function ($scope) {
-    $scope.inputs = [
-        {value: 'titel' }
-    ];
+app.controller("LesCtrl", ['$scope', 'lessons', function ($scope, lessons) {
     $scope.add = function () {
         $scope.inputs.push({
             value: ''
         });
     };
-});
+    $scope.lessons = lessons.lessons;
+    $scope.addLesson = function () {
+        if (!$scope.les || $scope.les == '') {
+            return;
+        }
+        lessons.create({
+            lesTitel: $scope.les
+        });
+        $scope.les = '';
+    };
+}]);
