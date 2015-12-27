@@ -19,12 +19,12 @@ app.config(function ($routeProvider) {
             controller: 'MainCtrl'
         })
 
-        .when('/Home', {
-            templateUrl: 'Templates/Home.html',
-            controller: 'MainCtrl'
-        })
+    .when('/Home', {
+        templateUrl: 'Templates/Home.html',
+        controller: 'MainCtrl'
+    })
 
-        .when('/Contact', {
+    .when('/Contact', {
             templateUrl: 'Templates/Contact.html',
             controller: 'MainCtrl'
         })
@@ -40,7 +40,7 @@ app.config(function ($routeProvider) {
             templateUrl: 'Templates/Admin.html',
             controller: 'LesCtrl',
             resolve: {
-                lesPromise: ['lessons', function(lessons){
+                lesPromise: ['lessons', function (lessons) {
                     return lessons.getAll();
                 }]
             }
@@ -53,7 +53,7 @@ app.config(function ($routeProvider) {
             templateUrl: 'Templates/Nieuweles.html',
             controller: "LesCtrl",
             resolve: {
-                lesPromise: ['lessons', function(lessons){
+                lesPromise: ['lessons', function (lessons) {
                     return lessons.getAll();
                 }]
             }
@@ -61,12 +61,13 @@ app.config(function ($routeProvider) {
         .when('/lessons/:lesId', {
             templateUrl: 'Templates/NieuweOpdracht.html',
             controller: "OpdrachtCtrl"
-    })
+        })
     $routeProvider.otherwise({
         redirectTo: '/Welkom'
     });
 });
 
+// factory to retrieve lessons and create them
 app.factory('lessons', ['$http', function ($http) {
     var o = {
         lessons: []
@@ -79,6 +80,24 @@ app.factory('lessons', ['$http', function ($http) {
     o.create = function (lesson) {
         return $http.post('/lessons', lesson).success(function (data) {
             o.lessons.push(data);
+        });
+    };
+    return o;
+}]);
+
+// factory to retrieve exercises and create them
+app.factory('opdrachten', ['$http', function ($http) {
+    var o = {
+        opdrachten: []
+    };
+    o.getAll = function () {
+        return $http.get('/opdrachten').success(function (data) {
+            angular.copy(data, o.opdrachten);
+        });
+    };
+    o.create = function (opdracht) {
+        return $http.post('/opdrachten', opdracht).success(function (data) {
+            o.opdrachten.push(data);
         });
     };
     return o;
@@ -104,14 +123,43 @@ app.controller("LesCtrl", ['$scope', 'lessons', function ($scope, lessons) {
     };
 }]);
 
-app.controller('OpdrachtCtrl', ['$scope', '$routeParams', 'lessons', function($scope, $routeParams, lessons){
+app.controller('OpdrachtCtrl', ['$scope', '$routeParams', 'opdrachten', function ($scope, $routeParams, opdrachten) {
     $scope.lesId = $routeParams.lesId;
+    $scope.inputs = opdrachten.opdrachten;
     $scope.inputs = [
-        {value: '' }
+        {
+            value: '',
+            radval: ''
+        }
     ];
     $scope.add = function () {
         $scope.inputs.push({
             value: ''
+        });
+    };
+    $scope.AddOpdracht = function () {
+        var needsCode;
+        angular.forEach($scope.inputs, function (item, i) {
+            if ((!item.value || item.value == '') && (!item.radval || item.radval == '')) {
+                return;
+            }
+            else
+            {
+                if (item.radval == 'ja') {
+                    needsCode = true;
+                }
+                else
+                {
+                    needsCode = false;
+                }
+                opdrachten.create({
+                    opdrachtTitel: item.value,
+                    heeftCode: needsCode
+                });
+                console.log(item);
+                item.value = '';
+                item.radval = '';    
+            }
         });
     };
 }]);

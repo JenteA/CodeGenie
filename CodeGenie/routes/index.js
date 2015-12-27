@@ -40,7 +40,17 @@ router.param('lesson', function(req, req, next, id){
         
         req.lesson = lesson;
         return next();
-    })
-})
+    });
+});
+/*Post opdracht*/
+router.post('/opdrachten', function(req, res, next){
+    var exercise = new Opdracht(req.body);
+    exercise.save(function(err, exercise){
+        if(err){ return next(err); }
+        
+        res.json(exercise);
+    });
+});
+
 
 module.exports = router;

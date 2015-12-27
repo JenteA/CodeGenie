@@ -16,18 +16,18 @@
             </div>
         </ul>
     </div>
-</div><br /><br /><br /><br /><br /><br /><br />
+</div>
 <div>
-    <form ng-submit="addOpdracht()">
+    <form ng-submit="AddOpdracht()">
         <div ng-repeat="item in inputs track by $index" class="input-group">
-            <input type="text" name="exerciseTitle" placeholder="titel"></br>
-            <input type="radio" name="{{$index}}" value="ja"/>Ja
-            <input type="radio" name="{{$index}}" value="nee"/>Nee
+            <input type="text" ng-model="inputs[$index].value" value="" placeholder="titel" /></br>
+            Code nodig? <input type="radio" ng-model="inputs[$index].radval" value="ja" />Ja
+            <input type="radio" ng-model="inputs[$index].radval" value="nee"/>Nee
+            
+        
         </div>
+    {{inputs}}
         <button class="btn btn-default" ng-click="add()">Add</button>
         <button type="submit" class="btn btn-default">Submit</button>  
-    </form>
-
-{{les.lesTitel}}
-      
+    </form>      
 </div>
