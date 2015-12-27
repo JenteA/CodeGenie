@@ -137,7 +137,7 @@ app.controller('OpdrachtCtrl', ['$scope', '$routeParams', 'opdrachten', function
             value: ''
         });
     };
-    $scope.AddOpdracht = function () {
+    $scope.Opdracht = function () {
         var needsCode;
         angular.forEach($scope.inputs, function (item, i) {
             if ((!item.value || item.value == '') && (!item.radval || item.radval == '')) {
@@ -154,6 +154,7 @@ app.controller('OpdrachtCtrl', ['$scope', '$routeParams', 'opdrachten', function
                 }
                 opdrachten.create({
                     opdrachtTitel: item.value,
+                    lesID: $scope.lesId,
                     heeftCode: needsCode
                 });
                 console.log(item);

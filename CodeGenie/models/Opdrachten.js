@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var OpdrachtSchema = new mongoose.Schema({
     opdrachtTitel: String,
-    //lesID: [{type: mongoose.Schema.Types.ObjectId, ref: 'Les'}],
+    lesID: [{type: mongoose.Schema.Types.ObjectId, ref: 'Les'}],
     //adminID: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     heeftCode: Boolean
 });
