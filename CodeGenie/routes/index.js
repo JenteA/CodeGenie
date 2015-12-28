@@ -76,8 +76,8 @@ router.param('opdracht', function(req, req, next, id){
 });
 
 /*return a lesson*/
-router.get('/lessons/:lesId', function(req, res, next){
-    req.lesId.populate('opdrachten', function(err, lesson) {
+router.get('/lessons/:lesson', function(req, res, next){
+    req.lesson.populate('opdrachten', function(err, lesson) {
             console.log('gelukt');
         res.json(lesson);
     });
