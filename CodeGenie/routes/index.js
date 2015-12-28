@@ -31,8 +31,9 @@ router.get('/lessons', function(req, res, next){
     });
 });
 
-/*get lesson ID*/
-router.param('lesson', function(req, req, next, id){
+/*preload lesson objects on routes with ':lesson'*/
+router.param('lesson', function(req, res, next, id){
+    console.log('ik zit erin');
     var query = Les.findById(id);
     
     query.exec(function (err, lesson){
@@ -45,7 +46,7 @@ router.param('lesson', function(req, req, next, id){
 });
 
 /*Post opdracht*/
-router.post('/lessons/:lesId/opdrachten', function(req, res, next){
+router.post('/lessons/:lesson/opdrachten', function(req, res, next){
     var exercise = new Opdracht(req.body);
     exercise.lesID = req.lesId;
     
@@ -61,7 +62,7 @@ router.post('/lessons/:lesId/opdrachten', function(req, res, next){
     });
 });
 
-/*get exercise ID*/
+// Preload comment objects on routes with ':comment'
 router.param('opdracht', function(req, req, next, id){
     var query = Opdracht.findById(id);
     
@@ -76,9 +77,9 @@ router.param('opdracht', function(req, req, next, id){
 
 /*return a lesson*/
 router.get('/lessons/:lesId', function(req, res, next){
-    req.lesId.populate('opdrachten', function(err, exercise) {
+    req.lesId.populate('opdrachten', function(err, lesson) {
             console.log('gelukt');
-        res.json(exercise);
+        res.json(lesson);
     });
 });
 

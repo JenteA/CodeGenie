@@ -66,12 +66,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             }
         })
         .state('lessen', {
-            url: '/lessons/:lesId',
+            url: '/lessons/:id',
             templateUrl: 'Templates/NieuweOpdracht.html',
             controller: "OpdrachtCtrl",
             resolve: {
                 les: ['$stateParams', 'lessons', function($stateParams, lessons) {
-                    return lessons.get($stateParams.lesId);
+                    return lessons.get($stateParams.id);
                 }]
             }
         })
@@ -88,8 +88,8 @@ app.factory('lessons', ['$http', function ($http) {
             angular.copy(data, o.lessons);
         });
     };
-    o.get = function(Id) {
-        return $http.get('/lessons/' + Id).then(function(res){
+    o.get = function(id) {
+        return $http.get('/lessons/' + id).then(function(res){
             console.log(res.data);
             return res.data;
         });
@@ -99,8 +99,8 @@ app.factory('lessons', ['$http', function ($http) {
             o.lessons.push(data);
         });
     };
-    o.addOpdracht = function(lesId, opdracht) {
-        return $http.post('/lessons/' + lesId + '/opdrachten', opdracht);
+    o.addOpdracht = function(id, opdracht) {
+        return $http.post('/lessons/' + id + '/opdrachten', opdracht);
     }
     return o;
 }]);
@@ -127,7 +127,6 @@ app.controller("LesCtrl", ['$scope', 'lessons', function ($scope, lessons) {
 
 app.controller('OpdrachtCtrl', ['$scope', 'lessons', function ($scope, lessons) {
     $scope.lessons = lessons.lessons;
-    $scope.inputs = opdrachten.opdrachten;
     $scope.inputs = [
         {
             value: '',
