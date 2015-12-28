@@ -1,16 +1,17 @@
 var express = require('express');
 var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
 var mongoose = require('mongoose');
 var Code = mongoose.model('Code');
 var Les = mongoose.model('Les');
 var Opdracht = mongoose.model('Opdracht');
 var GemaakteOpdracht = mongoose.model('GemaakteOpdracht');
 var User = mongoose.model('User');
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
 /*Post lessons*/
 router.post('/lessons', function(req, res, next){
@@ -42,15 +43,43 @@ router.param('lesson', function(req, req, next, id){
         return next();
     });
 });
+
 /*Post opdracht*/
-router.post('/opdrachten', function(req, res, next){
+router.post('/lessons/:lesId/opdrachten', function(req, res, next){
     var exercise = new Opdracht(req.body);
+    exercise.lesID = req.lesId;
+    
     exercise.save(function(err, exercise){
         if(err){ return next(err); }
         
-        res.json(exercise);
+        req.lesId.opdrachten.push(exercise);
+        res.lesId.save(function(err, exercise) {
+            if(err){ return next(err); }
+            
+            res.json(exercise);
+        });
     });
 });
 
+/*get exercise ID*/
+router.param('opdracht', function(req, req, next, id){
+    var query = Opdracht.findById(id);
+    
+    query.exec(function (err, opdracht){
+        if (err) {return next(err); }
+        if (!opdracht) {return next (new Error('can\'t find exercise')); }
+        
+        req.opdracht = opdracht;
+        return next();
+    });
+});
+
+/*return a lesson*/
+router.get('/lessons/:lesId', function(req, res, next){
+    req.lesId.populate('opdrachten', function(err, exercise) {
+            console.log('gelukt');
+        res.json(exercise);
+    });
+});
 
 module.exports = router;

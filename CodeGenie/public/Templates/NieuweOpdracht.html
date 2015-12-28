@@ -12,12 +12,15 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li><a href="#NieuweLes">Creëer nieuwe les</a></li>
             <div>
-                <li><a class="btn-default" href="#">Les 1</a></li>
+               <!-- <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}">{{les.lesTitel}}</a></li>-->
             </div>
         </ul>
     </div>
 </div>
 <div>
+    <div>
+        <label>{{lessons.lesTitel}}</label><br/>
+    </div>
     <form>
         <div ng-repeat="item in inputs track by $index" class="input-group">
             <input type="text" ng-model="inputs[$index].value" value="" placeholder="titel" /></br>

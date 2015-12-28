@@ -1,14 +1,15 @@
-var mongoose = require('mongoose');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 require('./models/Codes');
 require('./models/Lessen');
 require('./models/Opdrachten');
+require('./models/GemaakteOpdrachten');
 require('./models/Users');
 //require('./config/passport');
 mongoose.connect('mongodb://localhost/Assignments');

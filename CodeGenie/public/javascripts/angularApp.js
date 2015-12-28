@@ -1,4 +1,4 @@
-var app = angular.module('CodeGenie', ['ngRoute']);
+var app = angular.module('CodeGenie', ['ui.router']);
 
 /*
 Bij Single Page applications willen we geen page refreshes en daarom gebruiken we Angular's routing functionaliteit.
@@ -6,37 +6,42 @@ Bij Single Page applications willen we geen page refreshes en daarom gebruiken w
 We gebruiken $routingProvider om onze routes te beschrijven, en deze service injecteert onze html bestanden in de layout
 
 */
-app.config(function ($routeProvider) {
-    $routeProvider
+app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    $stateProvider
 
     // route for the home page
-        .when('/Welkom', {
+        .state('welkom', {
+            url: '/Welkom',
             templateUrl: 'Templates/Welkom.html',
             controller: 'MainCtrl'
         })
-        .when('/About', {
+        .state('about', {
+            url: '/About',
             templateUrl: 'Templates/About.html',
             controller: 'MainCtrl'
         })
-
-    .when('/Home', {
-        templateUrl: 'Templates/Home.html',
-        controller: 'MainCtrl'
-    })
-
-    .when('/Contact', {
+        .state('home', {
+            url: '/Home',
+            templateUrl: 'Templates/Home.html',
+            controller: 'MainCtrl'
+        })
+        .state('contact', {
+            url: '/Contact',
             templateUrl: 'Templates/Contact.html',
             controller: 'MainCtrl'
         })
-        .when('/Registreer', {
+        .state('registreer', {
+            url: '/Registreer',
             templateUrl: 'Templates/Registreer.html',
             controller: 'MainCtrl'
         })
-        .when('/Indienen', {
+        .state('indienen', {
+            url: '/Indienen',
             templateUrl: 'Templates/Indienen.html',
             controller: 'MainCtrl'
         })
-        .when('/Admin', {
+        .state('admin', {
+            url: '/Admin',
             templateUrl: 'Templates/Admin.html',
             controller: 'LesCtrl',
             resolve: {
@@ -45,11 +50,13 @@ app.config(function ($routeProvider) {
                 }]
             }
         })
-        .when('/Test', {
+        .state('test', {
+            url: '/Test',
             templateUrl: 'Templates/Test.html',
             controller: 'MainCtrl'
         })
-        .when('/NieuweLes', {
+        .state('nieuweLes', {
+            url: '/NieuweLes',
             templateUrl: 'Templates/Nieuweles.html',
             controller: "LesCtrl",
             resolve: {
@@ -58,48 +65,43 @@ app.config(function ($routeProvider) {
                 }]
             }
         })
-        .when('/lessons/:lesId', {
+        .state('lessen', {
+            url: '/lessons/:lesId',
             templateUrl: 'Templates/NieuweOpdracht.html',
-            controller: "OpdrachtCtrl"
+            controller: "OpdrachtCtrl",
+            resolve: {
+                les: ['$stateParams', 'lessons', function($stateParams, lessons) {
+                    return lessons.get($stateParams.lesId);
+                }]
+            }
         })
-    $routeProvider.otherwise({
-        redirectTo: '/Welkom'
-    });
-});
+    $urlRouterProvider.otherwise('/Home');
+}]);
 
 // factory to retrieve lessons and create them
 app.factory('lessons', ['$http', function ($http) {
     var o = {
         lessons: []
     };
-    o.getAll = function () {
+    o.getAll = function() {
         return $http.get('/lessons').success(function (data) {
             angular.copy(data, o.lessons);
         });
     };
-    o.create = function (lesson) {
+    o.get = function(Id) {
+        return $http.get('/lessons/' + Id).then(function(res){
+            console.log(res.data);
+            return res.data;
+        });
+    };
+    o.create = function(lesson) {
         return $http.post('/lessons', lesson).success(function (data) {
             o.lessons.push(data);
         });
     };
-    return o;
-}]);
-
-// factory to retrieve exercises and create them
-app.factory('opdrachten', ['$http', function ($http) {
-    var o = {
-        opdrachten: []
-    };
-    o.getAll = function () {
-        return $http.get('/opdrachten').success(function (data) {
-            angular.copy(data, o.opdrachten);
-        });
-    };
-    o.create = function (opdracht) {
-        return $http.post('/opdrachten', opdracht).success(function (data) {
-            o.opdrachten.push(data);
-        });
-    };
+    o.addOpdracht = function(lesId, opdracht) {
+        return $http.post('/lessons/' + lesId + '/opdrachten', opdracht);
+    }
     return o;
 }]);
 
@@ -123,8 +125,8 @@ app.controller("LesCtrl", ['$scope', 'lessons', function ($scope, lessons) {
     };
 }]);
 
-app.controller('OpdrachtCtrl', ['$scope', '$routeParams', 'opdrachten', function ($scope, $routeParams, opdrachten) {
-    $scope.lesId = $routeParams.lesId;
+app.controller('OpdrachtCtrl', ['$scope', 'lessons', function ($scope, lessons) {
+    $scope.lessons = lessons.lessons;
     $scope.inputs = opdrachten.opdrachten;
     $scope.inputs = [
         {
@@ -152,9 +154,8 @@ app.controller('OpdrachtCtrl', ['$scope', '$routeParams', 'opdrachten', function
                 {
                     needsCode = false;
                 }
-                opdrachten.create({
+                lessons.addOpdracht({
                     opdrachtTitel: item.value,
-                    lesID: $scope.lesId,
                     heeftCode: needsCode
                 });
                 console.log(item);
