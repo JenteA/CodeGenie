@@ -20,6 +20,9 @@
 <div>
     <div>
         <label>{{les.lesTitel}}</label><br/>
+        <ul>
+            <li ng-repeat="opdracht in les.opdrachten">{{opdracht.opdrachtTitel}}</li>
+        </ul>
     </div>
     <form>
         <div ng-repeat="item in inputs track by $index" class="input-group">
