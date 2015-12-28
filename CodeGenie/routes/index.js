@@ -48,16 +48,19 @@ router.param('lesson', function(req, res, next, id){
 /*Post opdracht*/
 router.post('/lessons/:lesson/opdrachten', function(req, res, next){
     var exercise = new Opdracht(req.body);
-    exercise.lesID = req.lesId;
-    
+    exercise.lesId = req.lesson;
+    console.log("ik ben uit de save");
     exercise.save(function(err, exercise){
+        console.log("ik ben in de save");
         if(err){ return next(err); }
         
-        req.lesId.opdrachten.push(exercise);
-        res.lesId.save(function(err, exercise) {
+        req.lesson.opdrachten.push(exercise);
+        console.log("ik ben voor de save");
+        req.lesson.save(function(err, lesson) {
+            console.log("ik ben in de 2de save");
             if(err){ return next(err); }
             
-            res.json(exercise);
+            res.json(lesson);
         });
     });
 });

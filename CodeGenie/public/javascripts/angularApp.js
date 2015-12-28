@@ -125,8 +125,9 @@ app.controller("LesCtrl", ['$scope', 'lessons', function ($scope, lessons) {
     };
 }]);
 
-app.controller('OpdrachtCtrl', ['$scope', 'lessons', function ($scope, lessons) {
+app.controller('OpdrachtCtrl', ['$scope', 'lessons', 'les', function ($scope, lessons, les) {
     $scope.lessons = lessons.lessons;
+    $scope.les = les;
     $scope.inputs = [
         {
             value: '',
@@ -153,7 +154,7 @@ app.controller('OpdrachtCtrl', ['$scope', 'lessons', function ($scope, lessons) 
                 {
                     needsCode = false;
                 }
-                lessons.addOpdracht({
+                lessons.addOpdracht(les._id, {
                     opdrachtTitel: item.value,
                     heeftCode: needsCode
                 });
