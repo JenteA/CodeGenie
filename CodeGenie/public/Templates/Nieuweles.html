@@ -11,23 +11,21 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li><a href="#NieuweLes">Creëer nieuwe les</a></li>
-            <div>
-                <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}">{{les.lesTitel}}</a></li>
-            </div>
+            <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}">{{les.lesTitel}}</a></li>
         </ul>
     </div>
 </div>
 <div>
     <form ng-submit="addLesson()">
-        <input type="text" name="lessonTitle" ng-model="les" placeholder="les titel"/>
+        <input type="text" name="lessonTitle" ng-model="les" placeholder="les titel" />
         <!--<div ng-repeat="item in inputs track by $index" class="input-group">
             <input type="text" name="exerciseTitle" placeholder="titel"></br>
             <input type="radio" name="{{$index}}" value="ja"/>Ja
             <input type="radio" name="{{$index}}" value="nee"/>Nee
         </div>
         <button class="btn btn-default" ng-click="add()">Add</button>-->
-        <button type="submit" class="btn btn-default">Submit</button>  
+        <button type="submit" class="btn btn-default">Submit</button>
     </form>
     {{les}}
-      
+
 </div>

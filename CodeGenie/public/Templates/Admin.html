@@ -1,19 +1,28 @@
 <br>
 <div class="jumbotron">
-	<div class="container">
-		<h1>Welkom bij de admin page</h1>
-		<p class>Hier kan je lessen maken en bekijken</p>
-	</div>
-    <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Kies je actie
-    <span class="caret"></span>
-    </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#NieuweLes">Creëer nieuwe les</a></li>
-    <div>
-        <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}">{{les.lesTitel}}</a></li>
+    <div class="container">
+        <h1>Welkom bij de admin page</h1>
+        <p class>Hier kan je lessen maken en bekijken</p>
     </div>
-  </ul>
-</div>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Kies je les die je wilt bewerken
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#NieuweLes">Creëer nieuwe les</a></li>
+            <div>
+                <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}">{{les.lesTitel}}</a></li>
+            </div>
+        </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Kies je les die je wilt bekijken
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}/gemaakteOpdracht">{{les.lesTitel}}</a></li>
+        </ul>
+    </div>
 </div>

@@ -1,0 +1,10 @@
+<br/>
+<h1>{{les.lesTitel}}</h1>
+<div  ng-repeat="opdracht in les.opdrachten">
+    <label>{{opdracht.opdrachtTitel}}</label><br/>
+    Ik heb de opdracht gemaakt: ja <input type="radio" ng-model="les.opdrachten[$index].radval" value="ja">
+    nee <input type="radio" ng-model="les.opdrachten[$index].radval" value="nee"><br/>
+    <textarea placeholder="vul hier uw code in" ng-model="les.opdrachten[$index].value" ng-show="opdracht.heeftCode == true"></textarea>
+</div>
+<button type="button" ng-click="indienen()" class="btn btn-default">Inleveren</button>
+{{les.opdrachten}}

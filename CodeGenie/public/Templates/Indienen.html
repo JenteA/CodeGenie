@@ -1,40 +1,37 @@
-  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-  <script src="https://code.angularjs.org/1.3.10/angular-route.min.js"></script>
-  <script type = "text/javascript" src="javascripts/angularApp.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <br>
 <div class="jumbotron">
-  <div class="container">
-    <h1>Welkom bij CodeGenie!</h1>
-    <p class>Hier kan je je opdrachten indienen. Selecteer een opdracht uit de lijst</p>
-    <div class="dropdown">
-    <select>
-      <option selected="selected">Opdracht 1</option>
-      <option>Opdracht 2</option>
-      <option>Opdracht 3</option>
-    </select>
-  </div>
+    <div class="container">
+        <h1>Welkom bij CodeGenie!</h1>
+        <p class>Hier kan je je opdrachten indienen. Selecteer een les uit de lijst</p>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Kies je actie
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li ng-repeat="les in lessons track by $index"><a class="btn-default" href="#/lessons/{{les._id}}/indienen">{{les.lesTitel}}</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
-  </div>
-  <h1></h1>
+<h1></h1>
 </div>
 
 <div class="row">
     <main class="col-xs-8">
-      <div ng-view></div>  
+        <div ng-view></div>
     </main>
 </div>
-<script>
-$( "select" )
-  .change(function () {
-    var str = "";
-    $( "select option:selected" ).each(function() {
-      str += $( this ).text() + " ";
-    });
-    $( "h1" ).text( str );
-  })
-  .change();
-</script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!--<script>
+    $("select")
+        .change(function() {
+            var str = "";
+            $("select option:selected").each(function() {
+                str += $(this).text() + " ";
+            });
+            $("h1").text(str);
+        })
+        .change();
+
+</script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

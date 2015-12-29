@@ -33,7 +33,6 @@ router.get('/lessons', function(req, res, next){
 
 /*preload lesson objects on routes with ':lesson'*/
 router.param('lesson', function(req, res, next, id){
-    console.log('ik zit erin');
     var query = Les.findById(id);
     
     query.exec(function (err, lesson){
@@ -49,15 +48,11 @@ router.param('lesson', function(req, res, next, id){
 router.post('/lessons/:lesson/opdrachten', function(req, res, next){
     var exercise = new Opdracht(req.body);
     exercise.lesId = req.lesson;
-    console.log("ik ben uit de save");
     exercise.save(function(err, exercise){
-        console.log("ik ben in de save");
         if(err){ return next(err); }
         
         req.lesson.opdrachten.push(exercise);
-        console.log("ik ben voor de save");
         req.lesson.save(function(err, lesson) {
-            console.log("ik ben in de 2de save");
             if(err){ return next(err); }
             
             res.json(lesson);
@@ -65,7 +60,7 @@ router.post('/lessons/:lesson/opdrachten', function(req, res, next){
     });
 });
 
-// Preload comment objects on routes with ':comment'
+// Preload exercise objects on routes with ':opdracht'
 router.param('opdracht', function(req, req, next, id){
     var query = Opdracht.findById(id);
     
@@ -81,8 +76,31 @@ router.param('opdracht', function(req, req, next, id){
 /*return a lesson*/
 router.get('/lessons/:lesson', function(req, res, next){
     req.lesson.populate('opdrachten', function(err, lesson) {
-            console.log('gelukt');
         res.json(lesson);
+    });
+});
+
+/*Post ingeleverde opdracht*/
+router.post('/lessons/:lesson/inleverenOpdrachten', function(req, res, next){
+    var exercise = new GemaakteOpdracht(req.body);
+    exercise.lesID = req.lesson;
+    exercise.save(function(err, exercise){
+        if(err){ return next(err); }
+        req.lesson.gemaakteOpdrachten.push(exercise);
+        req.lesson.save(function(err, lesson) {
+            if(err){ return next(err); }
+            
+            res.json(lesson);
+        });
+    });
+});
+
+/*return a lesson with finished exercises*/
+router.get('/lessons/:lesson/inleverenOpdrachten', function(req, res, next){
+    req.lesson.populate('gemaakteOpdrachten', function(err, lesson) {
+        req.lesson.populate('opdrachten', function(err, lesson) {
+            res.json(lesson);
+        })
     });
 });
 
