@@ -1,4 +1,4 @@
-var app = angular.module('CodeGenie', ['ui.router']);
+var app = angular.module('CodeGenie', ['ui.router', 'auth0', 'angular-storage', 'angular-jwt']);
 
 /*
 Bij Single Page applications willen we geen page refreshes en daarom gebruiken we Angular's routing functionaliteit.
@@ -6,7 +6,7 @@ Bij Single Page applications willen we geen page refreshes en daarom gebruiken w
 We gebruiken $routingProvider om onze routes te beschrijven, en deze service injecteert onze html bestanden in de layout
 
 */
-app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', 'authProvider', '$httpProvider', '$locationProvider', 'jwtInterceptorProvider', function ($stateProvider, $urlRouterProvider, authProvider, $httpProvider, $locationProvider, jwtInterceptorProvider) {
     $stateProvider
 
     // route for the home page
@@ -39,6 +39,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/Indienen',
             templateUrl: 'Templates/Indienen.html',
             controller: 'indienenCtrl',
+            data: {requiresLogin : true},
             resolve: {
                 lesPromise: ['lessons', function (lessons) {
                     return lessons.getAll();
@@ -49,6 +50,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/Admin',
             templateUrl: 'Templates/Admin.html',
             controller: 'LesCtrl',
+            data: {requiresLogin : true},
             resolve: {
                 lesPromise: ['lessons', function (lessons) {
                     return lessons.getAll();
@@ -64,6 +66,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/NieuweLes',
             templateUrl: 'Templates/Nieuweles.html',
             controller: "LesCtrl",
+            data: {requiresLogin : true},
             resolve: {
                 lesPromise: ['lessons', function (lessons) {
                     return lessons.getAll();
@@ -74,6 +77,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/lessons/:id',
             templateUrl: 'Templates/NieuweOpdracht.html',
             controller: "OpdrachtCtrl",
+            data: {requiresLogin : true},
             resolve: {
                 les: ['$stateParams', 'lessons', function ($stateParams, lessons) {
                     return lessons.get($stateParams.id);
@@ -94,14 +98,55 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             url: '/lessons/:id/gemaakteOpdracht',
             templateUrl: 'Templates/lesIngediend.html',
             controller: "OpdrachtIngediendCtrl",
+            data: {requiresLogin : true},
             resolve: {
                 les: ['$stateParams', 'lessons', function ($stateParams, lessons) {
                     return lessons.getIngediend($stateParams.id);
                 }]
             }
         })
+        .state('login', {
+            url: '/login',
+            templateUrl: 'Templates/Login.html',
+            controller: "LoginCtrl",
+        })
+        .state('logout', {
+            url: '/logout',
+            templateUrl: 'Templates/Logout.html',
+            controller: "LogoutCtrl",
+        })
     $urlRouterProvider.otherwise('/Home');
+
+    authProvider.init({
+        domain: 'codegenie.eu.auth0.com',
+        clientID: 'z2pYYzga31lsxKxEJsXt8vPmWOyUXAEP',
+        loginState: 'login'
+    });
+    // We're annotating this function so that the `store` is injected correctly when this file is minified
+    jwtInterceptorProvider.tokenGetter = ['store', function (store) {
+        // Return the saved token
+        return store.get('token');
+    }];
+
+    $httpProvider.interceptors.push('jwtInterceptor');
 }]);
+
+app.run(function($rootScope, auth, store, jwtHelper, $location) {
+  // This events gets triggered on refresh or URL change
+  $rootScope.$on('$locationChangeStart', function() {
+    var token = store.get('token');
+    if (token) {
+      if (!jwtHelper.isTokenExpired(token)) {
+        if (!auth.isAuthenticated) {
+          auth.authenticate(store.get('profile'), token);
+        }
+      } else {
+        // Either show the login page or use the refresh token to get a new idToken
+        $location.path('/');
+      }
+    }
+  });
+})
 
 // factory to retrieve lessons and create them
 app.factory('lessons', ['$http', function ($http) {
@@ -119,8 +164,8 @@ app.factory('lessons', ['$http', function ($http) {
             return res.data;
         });
     };
-    o.getIngediend = function(id) {
-        return $http.get('/lessons/' + id + '/inleverenOpdrachten').then(function(res) {
+    o.getIngediend = function (id) {
+        return $http.get('/lessons/' + id + '/inleverenOpdrachten').then(function (res) {
             return res.data;
         })
     }
@@ -211,9 +256,8 @@ app.controller('OpdrachtIndienCtrl', ['$scope', 'lessons', 'les', function ($sco
                 } else {
                     isMade = false;
                 }
-                if(!item.value)
-                {
-                    item.value = '';    
+                if (!item.value) {
+                    item.value = '';
                 }
                 console.log(item.opdrachtTitel);
                 lessons.inleverOpdracht(les._id, {
@@ -230,4 +274,36 @@ app.controller('OpdrachtIndienCtrl', ['$scope', 'lessons', 'les', function ($sco
 }]);
 app.controller('OpdrachtIngediendCtrl', ['$scope', 'les', function ($scope, les) {
     $scope.les = les;
+    console.log($scope.les.gemaakteOpdrachten);
+}]);
+
+app.controller('LoginCtrl', ['$scope', '$http', 'auth', 'store', '$location',
+function ($scope, $http, auth, store, $location) {
+        $scope.login = function () {
+            auth.signin({}, function (profile, token) {
+                // Success callback
+                store.set('profile', profile);
+                store.set('token', token);
+                $location.path('/');
+            }, function () {
+                // Error callback
+            });
+        };
+        $scope.logout = function () {
+            auth.signout();
+            store.remove('profile');
+            store.remove('token');
+        };
+
+
+}]);
+app.controller('LogoutCtrl', ['$scope', '$http', 'auth', 'store', '$location',
+function ($scope, $http, auth, store, $location) {
+        $scope.logout = function () {
+            auth.signout();
+            store.remove('profile');
+            store.remove('token');
+        };
+
+
 }]);

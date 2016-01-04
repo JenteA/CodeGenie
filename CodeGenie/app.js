@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var jwt = require('express-jwt');
 
 require('./models/Codes');
 require('./models/Lessen');

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('express-jwt');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,8 +14,13 @@ var Opdracht = mongoose.model('Opdracht');
 var GemaakteOpdracht = mongoose.model('GemaakteOpdracht');
 var User = mongoose.model('User');
 
+var jwtCheck = jwt({
+  secret: new Buffer('sNEAo2P3lGV-Zp80LwlfTMmLlL0mwgzWzy-mp2e_628H4ugZDlYjj11bIUu__rq0', 'base64'),
+  audience: 'z2pYYzga31lsxKxEJsXt8vPmWOyUXAEP'
+});
+
 /*Post lessons*/
-router.post('/lessons', function(req, res, next){
+router.post('/lessons', jwtCheck, function(req, res, next){
     var lesson = new Les(req.body);
     lesson.save(function(err, lesson){
         if(err){ return next(err); }
@@ -23,7 +29,7 @@ router.post('/lessons', function(req, res, next){
     });
 });
 /*Retrieve lessons*/
-router.get('/lessons', function(req, res, next){
+router.get('/lessons', jwtCheck, function(req, res, next){
     Les.find(function(err, lessons){
         if(err){return next(err); }
         
@@ -45,7 +51,7 @@ router.param('lesson', function(req, res, next, id){
 });
 
 /*Post opdracht*/
-router.post('/lessons/:lesson/opdrachten', function(req, res, next){
+router.post('/lessons/:lesson/opdrachten', jwtCheck, function(req, res, next){
     var exercise = new Opdracht(req.body);
     exercise.lesId = req.lesson;
     exercise.save(function(err, exercise){
@@ -61,7 +67,7 @@ router.post('/lessons/:lesson/opdrachten', function(req, res, next){
 });
 
 // Preload exercise objects on routes with ':opdracht'
-router.param('opdracht', function(req, req, next, id){
+router.param('opdracht', jwtCheck, function(req, req, next, id){
     var query = Opdracht.findById(id);
     
     query.exec(function (err, opdracht){
@@ -96,7 +102,7 @@ router.post('/lessons/:lesson/inleverenOpdrachten', function(req, res, next){
 });
 
 /*return a lesson with finished exercises*/
-router.get('/lessons/:lesson/inleverenOpdrachten', function(req, res, next){
+router.get('/lessons/:lesson/inleverenOpdrachten', jwtCheck, function(req, res, next){
     req.lesson.populate('gemaakteOpdrachten', function(err, lesson) {
         req.lesson.populate('opdrachten', function(err, lesson) {
             res.json(lesson);
