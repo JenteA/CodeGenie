@@ -237,7 +237,7 @@ app.controller('OpdrachtCtrl', ['$scope', 'lessons', 'les', function ($scope, le
 app.controller('indienenCtrl', ['$scope', 'lessons', function ($scope, lessons) {
     $scope.lessons = lessons.lessons;
 }]);
-app.controller('OpdrachtIndienCtrl', ['$scope', 'lessons', 'les', function ($scope, lessons, les) {
+app.controller('OpdrachtIndienCtrl', ['$scope', 'lessons', 'les', 'auth', function ($scope, lessons, les, auth) {
     $scope.les = les;
     var isMade;
     $scope.indienen = function () {
@@ -259,7 +259,8 @@ app.controller('OpdrachtIndienCtrl', ['$scope', 'lessons', 'les', function ($sco
                     opdrachtID: item._id,
                     opdrachttitel: item.opdrachtTitel,
                     isGemaakt: isMade,
-                    code: item.value
+                    code: item.value,
+                    studentNaam: auth.profile.nickname
                 });
                 item.radval = '';
                 item.value = '';

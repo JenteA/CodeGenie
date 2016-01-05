@@ -6,7 +6,7 @@ var GemaakteOpdrachtSchema = new mongoose.Schema({
     isGemaakt: Boolean,
     code: String,
     lesID: [{type: mongoose.Schema.Types.ObjectId, ref: 'Les'}],
-    studentID: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+    studentNaam: String
 });
 
 mongoose.model('GemaakteOpdracht', GemaakteOpdrachtSchema);
