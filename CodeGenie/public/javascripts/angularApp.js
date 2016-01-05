@@ -57,11 +57,6 @@ app.config(['$stateProvider', '$urlRouterProvider', 'authProvider', '$httpProvid
                 }]
             }
         })
-        .state('test', {
-            url: '/Test',
-            templateUrl: 'Templates/Test.html',
-            controller: 'MainCtrl'
-        })
         .state('nieuweLes', {
             url: '/NieuweLes',
             templateUrl: 'Templates/Nieuweles.html',
@@ -277,8 +272,9 @@ app.controller('OpdrachtIngediendCtrl', ['$scope', 'les', function ($scope, les)
     console.log($scope.les.gemaakteOpdrachten);
 }]);
 
-app.controller('LoginCtrl', ['$scope', '$http', 'auth', 'store', '$location',
-function ($scope, $http, auth, store, $location) {
+app.controller('authctrl', ['$scope', '$http', 'auth', 'store', '$location',function ($scope, $http, auth, store, $location){
+        $scope.auth = auth;
+
         $scope.login = function () {
             auth.signin({}, function (profile, token) {
                 // Success callback
@@ -289,21 +285,17 @@ function ($scope, $http, auth, store, $location) {
                 // Error callback
             });
         };
+
+
         $scope.logout = function () {
             auth.signout();
+            auth.a
             store.remove('profile');
             store.remove('token');
         };
-
-
 }]);
-app.controller('LogoutCtrl', ['$scope', '$http', 'auth', 'store', '$location',
-function ($scope, $http, auth, store, $location) {
-        $scope.logout = function () {
-            auth.signout();
-            store.remove('profile');
-            store.remove('token');
-        };
 
 
-}]);
+
+
+
