@@ -143,6 +143,22 @@ app.run(function($rootScope, auth, store, jwtHelper, $location) {
   });
 })
 
+app.filter('unique', function() {
+   return function(collection, keyname) {
+      var output = [], 
+          keys = [];
+
+      angular.forEach(collection, function(item) {
+          var key = item[keyname];
+          if(keys.indexOf(key) === -1) {
+              keys.push(key);
+              output.push(item);
+          }
+      });
+      return output;
+   };
+});
+
 // factory to retrieve lessons and create them
 app.factory('lessons', ['$http', function ($http) {
     var o = {
@@ -270,7 +286,21 @@ app.controller('OpdrachtIndienCtrl', ['$scope', 'lessons', 'les', 'auth', functi
 }]);
 app.controller('OpdrachtIngediendCtrl', ['$scope', 'les', function ($scope, les) {
     $scope.les = les;
-    console.log($scope.les.gemaakteOpdrachten);
+    $scope.getName = function(obj){
+        $scope.naamStudent = obj.target.attributes.value.value;
+    }
+    $scope.filterItems= function(items, name) {
+    var result = {};
+    var i = 0;
+    angular.forEach(items, function(item) {
+       if(item.studentNaam ==  name)
+           {
+               result[i] = item;
+               i++;
+           }
+    });
+    return result;
+}
 }]);
 
 app.controller('authctrl', ['$scope', '$http', 'auth', 'store', '$location',function ($scope, $http, auth, store, $location){

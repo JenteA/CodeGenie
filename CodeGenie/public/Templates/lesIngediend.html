@@ -1,11 +1,25 @@
 <br/>
-<h1>{{les.lesTitel}}</h1>
-<div ng-repeat="i in les.gemaakteOpdrachten track by $index">
-   <!-- <div ng-repeat="b in les.opdrachten ">-->
-        <label>{{i.opdrachttitel}}</label> </br>
-        <label>Heeft die persoon de les gemaakt? {{i.isGemaakt}}</label> <br/>
-        <label>{{i.code}}</label> <br />
-        <label>{{i.studentNaam}}</label>
-        <br/>
-  <!--  </div>-->
+<div class="container">
+    <h1>Welkom bij de admin page</h1>
+    <p class>Hier kan je lessen maken en bekijken</p>
 </div>
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Kies je actie
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li ng-repeat="j in les.gemaakteOpdrachten | unique: 'studentNaam'"><a class="btn-default" ng-click="getName($event)" value="{{j.studentNaam}}">{{j.studentNaam}}</a></li>
+    </ul>
+</div>
+</div>
+<h1>{{les.lesTitel}}</h1>
+<h2>{{naamStudent}}</h2>
+    <div ng-repeat="i in filterItems(les.gemaakteOpdrachten, naamStudent) track by $index">
+        <label>{{i.opdrachttitel}}</label>
+        </br>
+        <label>Heeft die persoon de les gemaakt? {{i.isGemaakt}}</label>
+        <br/>
+        <label>{{i.code}}</label>
+        <br/>
+    </div>
