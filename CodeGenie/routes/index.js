@@ -28,6 +28,7 @@ router.post('/lessons', jwtCheck, function(req, res, next){
         res.json(lesson);
     });
 });
+
 /*Retrieve lessons*/
 router.get('/lessons', jwtCheck, function(req, res, next){
     Les.find(function(err, lessons){

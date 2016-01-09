@@ -117,6 +117,7 @@ app.config(['$stateProvider', '$urlRouterProvider', 'authProvider', '$httpProvid
         clientID: 'z2pYYzga31lsxKxEJsXt8vPmWOyUXAEP',
         loginState: 'login'
     });
+    
     // We're annotating this function so that the `store` is injected correctly when this file is minified
     jwtInterceptorProvider.tokenGetter = ['store', function (store) {
         // Return the saved token
