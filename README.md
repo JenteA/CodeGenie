@@ -166,7 +166,7 @@ Je kan selecteren of je de vraag al dan niet hebt opgelost, en indien wel, zal j
 
 Deze controller wordt gebruikt door de Admin om gemaakte lessen te kunnen bekijken. Als je de les selecteert kan je daarna zien welke leerlingen deze les gemaakt hebben.
 
-<img src="screenshots/GemaakteLessenPerPersoon.png" width="350">
+<img src="screenshots/GemaakteLessenPerPersoon.png" width="350"/>
 
 Als je een leerling selecteert kan je zien welke opdrachten van de les deze gemaakt heeft.
 
@@ -176,7 +176,7 @@ Als je een leerling selecteert kan je zien welke opdrachten van de les deze gema
 
 De controller die je kan gebruiken om in te loggen of uit te loggen. Via ng-show en ng-hide kunnen er de juiste links worden getoond en de knop inloggen of uitloggen.
 
-<img src="screenshots/Login.png" width="250">
+<img src="screenshots/Login.png" width="250"/>
 
 ###<a id="Factories"></a>2.3.3. Factories
 <img src="screenshots/appFactory.png" width ="600"/>
@@ -215,11 +215,11 @@ Auth0 is een startup dat zich inzet om het ontwikkelen van authenticatie systeme
 
 ###<a id="Auth0InSite"></a>2.5.1. Auth0 in CodeGenie
 
-<img src="screenshots/Login.png" width="250">
+<img src="screenshots/Login.png" width="250"/>
 
 In de webiste van CodeGenie hebben we ervoor gekozen om aanmelden mogelijk te maken via Facebook, Google, Microsoft en een eigen aangemaakt account. Je kan je ook aanmelden via een Office365 account of via de Active Directory wat wel handig kan zijn voor op school zonder dat daar veel moeite in gestoken moet worden. enkel een paar parameters ingeven en het werkt. Een groot voordeel aan Auth0 is dat je ook een aantal velden krijgt om paramters in te steken op gebruikers niveau. We hebben ervoor gekozen om bij de administrators van CodeGenie in het veld user_metadata `isAdmin:true` te zetten waardoor onze app kan zien wie er Admin is en wie niet en zo de juiste informatie laten zien.
 
-<img src="screenshots/userData.png" width="600">
+<img src="screenshots/userData.png" width="600"/>
 
 #<a id="deploy"></a>3. CodeGenie deployen
 
