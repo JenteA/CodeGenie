@@ -28,9 +28,15 @@ We hebben dit project gekregen van Tim Dams. Het is een persoonlijk project voor
 >>>[2.3.2.3 Opdracht controller](#OpdrachtCtrl)</br>
 >>>[2.3.2.4 Indienen controller](#IndienenCtrl)</br>
 >>>[2.3.2.5 Opdracht indienen controller](#OpdrachtIndienenCtrl)</br>
->>>[2.3.2.6 Opdracht ingedient controller](#OpdrachtIngedientCtrl)</br>
+>>>[2.3.2.6 Opdracht ingediend controller](#OpdrachtIngedientCtrl)</br>
 >>>[2.3.2.7 Login controller](#LoginCtrl)</br>
 >>>[2.3.2.8 Logout controller](#LogoutCtrl)</br>
+
+>>[2.3.3 Factories](#Factories)</br>
+>>[2.3.3 NG-repeat, NG-hide, NG-show](#NG)</br>
+>>>[2.3.3.1 NG show](#show)</br>
+>>>[2.3.3.1 NG hide](#hide)</br>
+>>>[2.3.3.1 NG repeat](#repeat)</br>
 
 >[2.3. Node JS](#Node-JS)</br>
 >[2.3. Auth0](#Auth0)</br>
@@ -96,11 +102,21 @@ Onze Main controller doet eigenlijk niets. Het is gewoon de standaard controller
 De Les controller wordt gebruikt door de admin op nieuwe lessen te maken of om lessen te bekijken die leerlingen al hebben gemaakt.
 
 ![BewerkLes](screenshots/AdminBewerkLes.png)
+
+Bij het bewerken kan je nog extra vragen toevoegen aan een les. Het verwijderen van vragen is een functie die nog moet worden toegevoegd.
+
 ![BekijkLes](screenshots/AdminBekijkLes.png)
 
 
 
 ####<a id="OpdrachtCtrl"></a>2.3.2.4 Opdracht controller
+
+De opdracht controller wordt gebruikt om deelopdrachten toe te voegen aan de lessen. Je kan dit in 1 keer doen, of je kan 2 weken na het maken van een les nog eens terugkomen om een opdracht toe te voegen.
+
+<img src="screenshots/OpdrachtCtrl.png" width ="250"/>
+
+De 'Add' knop kan je gebruiken om een deelopdracht toe te voegen. De 'Submit' knop gebruik je om alle deelopdrachten door te sturen naar de database.
+
 ####<a id="IndienenCtrl"></a>2.3.2.3 Indienen Controller
 Indien je bent ingelogd als leerling, wordt deze controller gebruikt om alle lessen te tonen die de leerkracht heeft gemaakt.
 
@@ -113,11 +129,48 @@ Je kan de les kiezen die je wil indienen, en dan word je doorgestuurd naar de le
 Je kan selecteren of je de vraag al dan niet hebt opgelost, en indien wel, zal je de code moeten copy-pasten om mee te uploaden naar de database.
 
 ####<a id="OpdrachtIndienenCtrl"></a>2.3.2.5 Opdracht indienen Controller
-####<a id="OpdrachtIngedientCtrl"></a>2.3.2.6 Opdracht ingedient Controller
+
+Deze controller wordt gebruikt om het uitlezen van de lessen voor het indienen mogelijk te maken. Zonder deze controller zou het ongemogelijk...
+
+#Jente
+
+
+####<a id="OpdrachtIngediendCtrl"></a>2.3.2.6 Opdracht ingediend Controller
+
+Deze controller wordt gebruikt door de Admin om gemaakte lessen te kunnen bekijken. 
+
+<img src="screenshots/GemaakteLessenPerPersoon.png" width="350">
+
+Je kan hier de les selecteren die je wil en dan kan je zo makkelijk zien welke persoon deze les heeft gemaakt.
+
 ####<a id="LoginCtrl"></a>2.3.2.7 Login Controller
+
+De controller die je kan gebruiken om in te loggen.
+
+<img src="screenshots/Login.png" width="250">
+
+
 ####<a id="LogoutCtrl"></a>2.3.2.8 Logout Controller
+
+De controller die wordt gebruikt om uit te loggen.
+
+###<a id="Factories"></a>2.3.3 Factories
+
+#Jente
+
+
+###<a id="NG"></a>2.3.4 NG module
+####<a id="show"></a>2.3.4.1 NG show
+####<a id="hide"></a>2.3.4.2 NG hide
+####<a id="repeat"></a>2.3.4.3 NG repeat
+
 ##<a id="Node-JS"></a>2.4. Node JS
+
+Node JS is het platform waarmee we onze web-applicatie gaan draaien. In combinatie met een javascript engine, moet de browser zelf niets meer doen maar zal node de gehele applicatie gaan draaien
+
 ##<a id="Auth0"></a>2.4. Auth0
+
+#Jente
 
 
 
