@@ -230,7 +230,7 @@ manier van deployen:<br/>
 3. type `npm start` in de terminal<br/>
 4. surf naar ``localhost:3001`<br/>
 
-<img src="screenshots/codegenie.png" width="800"/>
+<img src="screenshots/codegenie.PNG" width="800"/>
 
 #<a id="conclusie"></a>4. Conclusie
 We hebben veel bijgeleerd over de MEAN stack over JavaScript en over debuggen. Het project was in het begin zeker niet gemakkelijk en we hebben er lang overgedaan om alles goed te snappen en op weg te geraken. We zaten soms met onze handen in de haren en half de klas kwam meehelpen en uiteindelijk bleek dit een probleem met een `console.log();` te zijn :sweat:. Maar we hebben dit project tot een goed einde gebracht met de nodige functies. We hadden spijtig genoeg wel te weinig tijd om ook een aantal nice to have's er in te zetten. Maar we zijn toch blij met het uiteindelijke resultaat. 
