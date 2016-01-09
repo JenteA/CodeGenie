@@ -69,7 +69,7 @@ Je ziet hier dat er een nieuw Mongoose schema gemaakt wordt. Er moeten ook de ve
 
 ##<a id="Express"></a>2.2. Express
 
-Dit is een light weight web application framework dat wordt gebruikt door [NodeJS](#Node-JS). Je kan dit gebruiken voor single page, multi page en hybride web-applicaties. Het zorgt voor de MVC architectuur op de server zijde. Het is dus de backend van ons project. Express heeft een Express generator die ervoor zorgt dat het skelet van onze web applicatie gemaakt wordt, hierdoor hebben we een overzichtelijke mappen structuur en zijn de nodige bestanden voor ons aangemaakt en is er de nodige code om een Express webapplicatie te starten al aanwezig in de bestanden. Het bestand waarin alles van Express staat is `/routes/index.js`.
+Dit is een light weight web application framework dat wordt gebruikt door [NodeJS](#NodeJS). Je kan dit gebruiken voor single page, multi page en hybride web-applicaties. Het zorgt voor de MVC architectuur op de server zijde. Het is dus de backend van ons project. Express heeft een Express generator die ervoor zorgt dat het skelet van onze web applicatie gemaakt wordt, hierdoor hebben we een overzichtelijke mappen structuur en zijn de nodige bestanden voor ons aangemaakt en is er de nodige code om een Express webapplicatie te starten al aanwezig in de bestanden. Het bestand waarin alles van Express staat is `/routes/index.js`.
 
 ###<a id="Get"></a>2.2.1. Get request 
 ![GET request](screenshots/routerGet.png)
@@ -230,7 +230,7 @@ manier van deployen:<br/>
 3. type `npm start` in de terminal<br/>
 4. surf naar ``localhost:3001`<br/>
 
-<img src="screenshots/codegenie.PNG" width="800"/>
+<img src="screenshots/codegenie.png" width="800"/>
 
 #<a id="conclusie"></a>4. Conclusie
 We hebben veel bijgeleerd over de MEAN stack over JavaScript en over debuggen. Het project was in het begin zeker niet gemakkelijk en we hebben er lang overgedaan om alles goed te snappen en op weg te geraken. We zaten soms met onze handen in de haren en half de klas kwam meehelpen en uiteindelijk bleek dit een probleem met een `console.log();` te zijn :sweat:. Maar we hebben dit project tot een goed einde gebracht met de nodige functies. We hadden spijtig genoeg wel te weinig tijd om ook een aantal nice to have's er in te zetten. Maar we zijn toch blij met het uiteindelijke resultaat. 
