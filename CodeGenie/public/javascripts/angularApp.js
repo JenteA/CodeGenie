@@ -304,7 +304,7 @@ app.controller('OpdrachtIngediendCtrl', ['$scope', 'les', function ($scope, les)
 }
 }]);
 
-app.controller('authctrl', ['$scope', '$http', 'auth', 'store', '$location',function ($scope, $http, auth, store, $location){
+app.controller('authctrl', ['$scope', '$http', 'auth', 'store', '$location','$location', function ($scope, $http, auth, store, $location, $location){
         $scope.auth = auth;
 
         $scope.login = function () {
@@ -324,6 +324,7 @@ app.controller('authctrl', ['$scope', '$http', 'auth', 'store', '$location',func
             auth.a
             store.remove('profile');
             store.remove('token');
+            $location.path('/');
         };
 }]);
 
