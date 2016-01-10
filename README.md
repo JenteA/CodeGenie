@@ -97,7 +97,7 @@ In de app.config gaan we het gedrag van onze website definiëren op verschillend
 ####<a id="StateProvider"></a>2.3.1.1. $stateProvider
 ![Verschillende states](screenshots/Controllers.png)
 
-In de $sateProvider gaan we de verschillende states defineren. Deze states zorgen ervoor dat als er naar een bepaalde URL gesurft wordt de juiste state geladen wordt en de pagina juist wordt weergegeven. Via de states kunnen we een controller definiëren die ervoor zorgt dat je een meer dynamische pagina kan maken. Via states kan je ook verschillende verschillende functies definiëren, die functies zorgen ervoor dat er bepaalde dingen uit de database gelande kunnen worden om te gebruiken in de controller of dat als je naar een bepaalde staat gaat er ingelogd moet zijn voor je ernaar toe kan gaan.
+In de $stateProvider gaan we de verschillende states defineren. Deze states zorgen ervoor dat als er naar een bepaalde URL gesurft wordt de juiste state geladen wordt en de pagina juist wordt weergegeven. Via de states kunnen we een controller definiëren die ervoor zorgt dat je een meer dynamische pagina kan maken. Via states kan je ook verschillende functies definiëren, die functies zorgen ervoor dat er bepaalde dingen uit de database geladen kunnen worden om te gebruiken in de controller of dat als je naar een bepaalde staat gaat er ingelogd moet zijn voor je ernaar toe kan gaan.
 ####<a id="UrlRouterProvider"></a>2.3.1.2. $urlRouterProvider
 ![OtherwiseState](screenshots/OtherwiseState.png)
 
@@ -181,7 +181,7 @@ De controller die je kan gebruiken om in te loggen of uit te loggen. Via ng-show
 ###<a id="Factories"></a>2.3.3. Factories
 <img src="screenshots/appFactory.png" width ="600"/>
 
-Factories zorgen ervoor dat je gemmakkelijk en zonder dubbele code een request kan doen naar de server. In de factory definieer je een functie daarin definieer je welke request je wil sturen en de URL naar waar je deze wilt versturen en dan definieer je wat er gereturned moet worden. Je roept de factory aan in de controller of in de resolve functie van je routes via voor deze afbeelidng `var lesson = lessons.get(id);`.
+Factories zorgen ervoor dat je gemakkelijk en zonder dubbele code een request kan doen naar de server. In de factory definiëer je een functie, daarin definiëer je welke request je wil sturen en de URL naar waar je deze wilt versturen en dan definiëer je wat er gereturned moet worden. Je roept de factory aan in de controller of in de resolve functie van je routes via voor deze afbeelding `var lesson = lessons.get(id);`.
 
 ###<a id="Filters"></a>2.3.4. Filters
 ![Filter](screenshots/appFilter.png)
@@ -203,28 +203,30 @@ app.run wordt altijd uitgevoerd wanneer er een refresh of een verandering van de
 2. We gaan kijken of deze token niet verlopen is<br/>
 3. We gaan kijken of de persoon niet aangemeld is<br/>
 4. De persoon aanmelden<br/>
-Als een van de voorwarden niet voldaan is gaan we de persoon terugsturen naar de home pagina.
+Als een van de voorwaarden niet voldaan is, gaan we de persoon terugsturen naar de home pagina.
 
 ##<a id="NodeJS"></a>2.4. NodeJS
 
-NodeJS is een asynchroon event driven framework dat zeer snel werkt en heel efficient is. NodeJS kan verschillende connecties aan met weinig overhead. NodeJs werkt op JavaScript wat een voordeel is omdat veel mensen JavaScript kennen en de front-end kan werken met javascript waardoor er minder probelemn zijn met het doorgeven van data van de front-end naar de back-end omdat bijde systemen dezelfde taal spreken en dus ook de data op dezelfde manier verwerken. NodeJS levert ook npm mee. Dit is een packetmanager voor NodeJs waardoor het makkelijker wordt gemaakt om extra modules te instaleren.
+NodeJS is een asynchroon event driven framework dat zeer snel werkt en heel efficiënt is. NodeJS kan verschillende connecties aan met weinig overhead. NodeJs werkt op JavaScript, wat een voordeel is omdat veel mensen JavaScript kennen. De front-end werkt met javascript, waardoor er minder problemen zijn met het doorgeven van data van de front-end naar de back-end. Omdat beide systemen dezelfde taal spreken, kan de data op dezelfde manier verwerkt worden. NodeJS levert ook npm mee. Dit is een packetmanager voor NodeJs waardoor het makkelijker wordt gemaakt om extra modules te installeren.
 
 ##<a id="Auth0"></a>2.5. Auth0
 
-Auth0 is een startup dat zich inzet om het ontwikkelen van authenticatie systemen zeer gemakkelijk te maken en met zeer veel functionaliteiten. eigenlijk is het zo gemakkelijk dat je moet kiezen waarmee je je wilt kunnen inloggen een developer account aanmaken op deze systemen wat eignelijk een tutorial volgen is op de Auth0 website en daarna de quickstart guide volgen en alles copy-pasten.
+Auth0 is een startup die zich inzet om het ontwikkelen van authenticatie systemen zeer gemakkelijk te maken en met zeer veel functionaliteiten. Eigenlijk is het zo gemakkelijk dat je moet kiezen waarmee je je wilt kunnen inloggen. Je moet een developer account aanmaken, een tutorial volgen, de waarden ingeven voor je 'domein' en zo extra accounts toemaken met eventueel extra velden (zoals bij ons IsAdmin).
 
 ###<a id="Auth0InSite"></a>2.5.1. Auth0 in CodeGenie
 
 <img src="screenshots/Login.png" width="250"/>
 
-In de webiste van CodeGenie hebben we ervoor gekozen om aanmelden mogelijk te maken via Facebook, Google, Microsoft en een eigen aangemaakt account. Je kan je ook aanmelden via een Office365 account of via de Active Directory wat wel handig kan zijn voor op school zonder dat daar veel moeite in gestoken moet worden. enkel een paar parameters ingeven en het werkt. Een groot voordeel aan Auth0 is dat je ook een aantal velden krijgt om paramters in te steken op gebruikers niveau. We hebben ervoor gekozen om bij de administrators van CodeGenie in het veld user_metadata `isAdmin:true` te zetten waardoor onze app kan zien wie er Admin is en wie niet en zo de juiste informatie laten zien.
+In de website van CodeGenie hebben we ervoor gekozen om aanmelden mogelijk te maken via Facebook, Google, Microsoft en een eigen aangemaakt account. Je kan je ook aanmelden via een Office365 account of via de Active Directory wat wel handig kan zijn voor op school zonder dat daar veel moeite in gestoken moet worden. Enkel een paar parameters ingeven en het werkt. Een groot voordeel aan Auth0 is dat je ook een aantal velden krijgt om parameters in te steken op gebruikersniveau. We hebben ervoor gekozen om bij de administrators van CodeGenie in het veld user_metadata `isAdmin:true` te zetten waardoor onze app kan zien wie er Admin is en wie niet en zo de juiste informatie laten zien.
 
 <img src="screenshots/userData.png" width="600"/>
 
 #<a id="deploy"></a>3. CodeGenie deployen
 
-Je hebt NodeJS nodig de versie maakt niet uit. liefst >5.0.
+Je hebt NodeJS nodig, de versie maakt niet uit maar liefst >5.0.
+
 manier van deployen:<br/>
+
 1. ga naar `CodeGenie/CodeGenie/` via de terminal<br/>
 2. type `npm install` in de terminal<br/>
 3. type `npm start` in de terminal<br/>
@@ -233,4 +235,4 @@ manier van deployen:<br/>
 <img src="screenshots/CodeGenie.png" width="800"/>
 
 #<a id="conclusie"></a>4. Conclusie
-We hebben veel bijgeleerd over de MEAN stack over JavaScript en over debuggen. Het project was in het begin zeker niet gemakkelijk en we hebben er lang overgedaan om alles goed te snappen en op weg te geraken. We zaten soms met onze handen in de haren en half de klas kwam meehelpen en uiteindelijk bleek dit een probleem met een `console.log();` te zijn :sweat:. Maar we hebben dit project tot een goed einde gebracht met de nodige functies. We hadden spijtig genoeg wel te weinig tijd om ook een aantal nice to have's er in te zetten. Maar we zijn toch blij met het uiteindelijke resultaat. 
+We hebben veel bijgeleerd over de MEAN stack over JavaScript en over debuggen. Het project was in het begin zeker niet gemakkelijk en we hebben er lang over gedaan om alles goed te snappen en op weg te geraken. We zaten soms met onze handen in de haren en de helft van de klas kwam meehelpen en uiteindelijk bleek dit een probleem met een `console.log();` te zijn. Maar we hebben dit project tot een goed einde gebracht met de nodige functies. We hadden spijtig genoeg wel te weinig tijd om ook een aantal nice to have's te kunnen implementeren. Maar we zijn toch blij met het uiteindelijke resultaat. 
