@@ -18,7 +18,7 @@ require('./models/Users');
 var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
                 replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };
 
-var mongodbUri = 'mongodb://JenteA:MongoDBCON01@ds035985.mongolab.com:35985/codegenie';
+var mongodbUri = 'mongodb://Mongo:MongoDB01@ds035985.mongolab.com:35985/codegenie';
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
 mongoose.connect(mongooseUri, options);
