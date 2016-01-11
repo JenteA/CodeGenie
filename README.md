@@ -47,6 +47,8 @@ We hebben dit project gekregen van Tim Dams. Het is een persoonlijk project voor
 
 [3. CodeGenie deployen](#deploy)
 
+[3. Heroku](#Heroku)
+
 [4. Conclusie](#Conclusie)
 
 #<a id="Inleiding"></a>1. Inleiding
@@ -234,5 +236,10 @@ manier van deployen:<br/>
 
 <img src="screenshots/CodeGenie.png" width="800"/>
 
-#<a id="conclusie"></a>4. Conclusie
+
+#<a id="Heroku"></a>4. Heroku
+
+Onze applicatie staat online en kan je [hier](codegeniekenny-jente.herokuapp.com) vinden.
+
+#<a id="conclusie"></a>5. Conclusie
 We hebben veel bijgeleerd over de MEAN stack over JavaScript en over debuggen. Het project was in het begin zeker niet gemakkelijk en we hebben er lang over gedaan om alles goed te snappen en op weg te geraken. We zaten soms met onze handen in de haren en de helft van de klas kwam meehelpen en uiteindelijk bleek dit een probleem met een `console.log();` te zijn. Maar we hebben dit project tot een goed einde gebracht met de nodige functies. We hadden spijtig genoeg wel te weinig tijd om ook een aantal nice to have's te kunnen implementeren. Maar we zijn toch blij met het uiteindelijke resultaat. 
