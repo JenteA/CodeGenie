@@ -47,9 +47,9 @@ We hebben dit project gekregen van Tim Dams. Het is een persoonlijk project voor
 
 [3. CodeGenie deployen](#deploy)
 
-[3. Heroku](#Heroku)
+[4. Heroku](#Heroku)
 
-[4. Conclusie](#Conclusie)
+[5. Conclusie](#Conclusie)
 
 #<a id="Inleiding"></a>1. Inleiding
 
