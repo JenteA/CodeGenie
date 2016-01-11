@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var jwt = require('express-jwt');
+var uriUtil = require('mongodb-uri');
 
 require('./models/Codes');
 require('./models/Lessen');
@@ -13,7 +14,21 @@ require('./models/Opdrachten');
 require('./models/GemaakteOpdrachten');
 require('./models/Users');
 //require('./config/passport');
-mongoose.connect('mongodb://localhost/Assignments');
+
+var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
+                replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };
+
+var mongodbUri = 'mongodb://JenteA:MongoDBCON01@ds035985.mongolab.com:35985/codegenie';
+var mongooseUri = uriUtil.formatMongoose(mongodbUri);
+
+mongoose.connect(mongooseUri, options);
+var conn = mongoose.connection;             
+ 
+conn.on('error', console.error.bind(console, 'connection error:'));  
+ 
+conn.once('open', function() {
+  // Wait for the database connection to establish, then start the app.                         
+});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
